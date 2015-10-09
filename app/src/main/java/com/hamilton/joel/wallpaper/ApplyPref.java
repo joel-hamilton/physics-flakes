@@ -39,7 +39,8 @@ public class ApplyPref extends Preference {
             title.setTextColor(Color.parseColor("#FFFFFF"));
             title.setTypeface(null, Typeface.BOLD);
 
-            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundAccentColorDark));
+            v.setBackgroundResource(R.drawable.apply_button_background_selector);
+//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundAccentColorDark));
 //            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
 
         }

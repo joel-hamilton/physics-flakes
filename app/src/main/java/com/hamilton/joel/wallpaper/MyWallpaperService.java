@@ -114,10 +114,10 @@ public class MyWallpaperService extends WallpaperService {
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
                     if (
-                            key.equals("touch") ||
-                            key.equals("shake") ||
-                            key.equals("antiGravity") ||
-                            key.equals("shakeOnVisible")) {
+                            key.equals("touch_enabled") ||
+                            key.equals("enable_shake") ||
+                            key.equals("antigravity_enabled") ||
+                            key.equals("shake_on_visible")) {
                         Log.i(TAG, "BOOLEAN CHANGED");
                         wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
                                 .setCategory("Prefs Changed")
@@ -154,18 +154,18 @@ public class MyWallpaperService extends WallpaperService {
         }
 
         private void getPrefs(SharedPreferences prefs) {
-            int temp   = prefs.getInt("numberOfFlakes", INT_DEFAULT_QUANTITY);
+            int temp   = prefs.getInt("number_of_flakes", INT_DEFAULT_QUANTITY);
             int temp2 = 6 - temp;
                 flakeFactor = temp2 * 1500;
 
             maxNumber = calculateFlakeNumber(flakeFactor);
-            imagePosition = "p" + prefs.getInt("imagePicker", 0);
-            shakeOnVisible = prefs.getBoolean("shakeOnVisible", false);
-            gravity = prefs.getInt("flakeSpeed", INT_DEFAULT_GRAVITY);
-            flakeQuality = 1 + prefs.getInt("flakeQuality", INT_DEFAULT_QUALITY);
-            touchEnabled = prefs.getBoolean("touch", true);
-            shakeEnabled = prefs.getBoolean("shake", true);
-            useAccelerometer = prefs.getBoolean("antiGravity", true);
+            imagePosition = "p" + prefs.getInt("image_picker", 0);
+            shakeOnVisible = prefs.getBoolean("shake_on_visible", false);
+            gravity = prefs.getInt("gravity_strength", INT_DEFAULT_GRAVITY);
+            flakeQuality = 1 + prefs.getInt("flake_quality", INT_DEFAULT_QUALITY);
+            touchEnabled = prefs.getBoolean("touch_enabled", true);
+            shakeEnabled = prefs.getBoolean("enable_shake", true);
+            useAccelerometer = prefs.getBoolean("antigravity_enabled", true);
 
 //                wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
 //                        .setCategory("Action")
@@ -575,7 +575,6 @@ public class MyWallpaperService extends WallpaperService {
         }
 
         private void drawFlakes(Canvas canvas, List<Flake> flakeList) {
-            canvas.drawBitmap(background, null, screenSize, defaultPaint);
 
             int passes = flakeQuality;// / 2;
             if (passes == 0) {
@@ -586,17 +585,16 @@ public class MyWallpaperService extends WallpaperService {
 
             paint.setAntiAlias(true);
             paint.setARGB(alpha, 255, 255, 255);
-//            paint.setStyle(Paint.Style.FILL);
-//            paint.setColor(Color.WHITE);
-//            paint.setAlpha(alpha);
-//            paint.setStrokeJoin(Paint.Join.ROUND);
+
+                canvas.drawBitmap(background, null, screenSize, defaultPaint);
 
 
-            for (Flake flake : flakeList) {
-                for (int i = 0; (i < passes) && ((i * 2) < flake.size); i++) {
-                    canvas.drawCircle(flake.x, flake.y, flake.size - (i*2), paint);// (flake.size / (Math.sqrt(i))), paint);
+                for (Flake flake : flakeList) {
+                    for (int i = 0; (i < passes) && ((i * 2) < flake.size); i++) {
+                            canvas.drawCircle(flake.x, flake.y, flake.size - (i * 2), paint);// (flake.size / (Math.sqrt(i))), paint);
+                    }
                 }
             }
         }
     }
-}
+

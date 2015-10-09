@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -46,8 +47,10 @@ public class ImageGalleryActivity extends AppCompatActivity {
 //    private CustomPagerAdapter adapter;
     private Button setWallpaper;
     private Button cancel;
-//    private ProgressBar pBar;
+    private ProgressBar pBar;
+    private FrameLayout pBarHolder;
     private Tracker imageGalleyActivityTracker;
+    private ProgressDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,50 +60,41 @@ public class ImageGalleryActivity extends AppCompatActivity {
         imageGalleyActivityTracker.setScreenName(TAG);
         imageGalleyActivityTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Log.i(TAG, "onCreate CALLED");
         setContentView(R.layout.image_gallery_image_pager);
+
+//        pBar = (ProgressBar) findViewById(R.id.progressBar);
+//        pBarHolder = (FrameLayout) findViewById(R.id.progress_bar_holder);
+//        pBar.setVisibility(View.VISIBLE);
+//        pBarHolder.setVisibility(View.VISIBLE);
+
 
         if ((findViewById(R.id.fragment_container) != null)) {
             Log.i(TAG, "onCreate VIEW EXISTS");
             View v = findViewById(R.id.fragment_container);
-            v.setBackgroundColor(getResources().getColor(R.color.backgroundColorLight));
+//            v.setBackgroundColor(getResources().getColor(R.color.backgroundColor));
+            v.setBackgroundResource(R.drawable.image_picker_drawable);
         }
-//
-//        pBar = (ProgressBar) findViewById(R.id.progressBar);
-//        pBar.setVisibility(View.VISIBLE);
+
 
         adapter = new ImageViewPagerAdapter(ImageGalleryActivity.this);
-//        adapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
-
-
         pager = (ViewPager) findViewById(R.id.pager);
-        pager.setBackgroundColor(getResources().getColor(R.color.backgroundColor));
+        pager.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
-//
-//
-//        final Thread thread = new Thread() {
+//        pager.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
 //            @Override
-//            public void run() {
-//
-//
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        pager.setOffscreenPageLimit(10);
-//                        Log.i(TAG, "OFFSCREEN LIMIT " + pager.getOffscreenPageLimit());
-//                        pBar.setVisibility(View.INVISIBLE);
-//                    }
-//                }, 3000);
+//            public void onChildViewAdded(View parent, View child) {
 //            }
-//        };
-//        thread.run();
+//
+//            @Override
+//            public void onChildViewRemoved(View parent, View child) {
+//
+//            }
+//
+//        });
+
 
         setWallpaper = (Button) findViewById(R.id.set_background_button);
         setWallpaper.setOnClickListener(new View.OnClickListener() {
@@ -108,11 +102,13 @@ public class ImageGalleryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("imagePicker", pager.getCurrentItem()); //TODO this works; set prefs according to image selected
+                editor.putInt("image_picker", pager.getCurrentItem());
                 editor.commit();
-                Intent i = new Intent(ImageGalleryActivity.this, MyPreferencesActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(ImageGalleryActivity.this, MyPreferencesActivity.class);
+//                startActivity(i);
                 finish();
+//                supportFinishAfterTransition();
+
             }
         });
 
@@ -122,16 +118,23 @@ public class ImageGalleryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Log.i(TAG, "" + pager.getCurrentItem());
-                Intent i = new Intent(ImageGalleryActivity.this, MyPreferencesActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(ImageGalleryActivity.this, MyPreferencesActivity.class);
+//                startActivity(i);
                 finish();
+//                supportFinishAfterTransition();
             }
         });
 
 
 
 
+
+
+
     }
+
+
+
 
 
     //--------------------------------------------
@@ -161,10 +164,12 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
             View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
             ImageView imageView = (ImageView) itemView.findViewById(R.id.image_view);
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
             Point size = new Point();
             Display display = getWindowManager().getDefaultDisplay();
             display.getSize(size);
             int width = size.x;
+
 
             String pageNumberString = "p" + String.valueOf(position);
             int bitmapResourceInt = getResources().getIdentifier(pageNumberString, "drawable", getPackageName());
@@ -200,6 +205,11 @@ public class ImageGalleryActivity extends AppCompatActivity {
     private class ImageLoader extends AsyncTask<Integer, Void, Bitmap> {
 //    private class ImageLoader extends AsyncTask<ArrayList<Integer>, Void, Bitmap> {
 
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
         @Override
         protected Bitmap doInBackground(Integer... params) {

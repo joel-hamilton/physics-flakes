@@ -13,7 +13,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -55,7 +54,7 @@ public class QualityPickerPreferences extends DialogPreference {
                         value = 1;
                         Log.i(TAG, "VALUE = " + value);
                         break;
-                    case 2:
+                    default:
                         value = 2;
                         Log.i(TAG, "VALUE = " + value);
                         break;
@@ -80,14 +79,14 @@ public class QualityPickerPreferences extends DialogPreference {
     @Override
     protected void onBindView(View v) {
         super.onBindView(v);
-
         title = (TextView) v.findViewById(android.R.id.title);
         if (title != null) {
             title.setGravity(Gravity.CENTER);
             title.setTypeface(null, Typeface.BOLD);
 //            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundDark));
-//
-            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
+            v.setBackgroundResource(R.drawable.click_background_selector);
+
+//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
 
         }
     }

@@ -3,28 +3,38 @@
               android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
+              android:layout_marginBottom="50dp"
                 android:id="@+id/fragment_container">
+              <!--android:background="@drawable/image_picker_drawable"-->
+                <!--android:paddingLeft="6dp"-->
+                <!--android:paddingRight="6dp"-->
+                <!--android:paddingTop="6dp"-->
+                <!--android:paddingBottom="6dp"-->
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/progress_bar_holder">-->
 
 
-    <!--<ProgressBar-->
-        <!--style="?android:attr/progressBarStyleLarge"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/progressBar"-->
-        <!--android:layout_gravity="center_horizontal"/>-->
+        <!--<ProgressBar-->
+            <!--style="?android:attr/progressBarStyleLarge"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/progressBar"-->
+            <!--android:layout_gravity="center"/>-->
+
+
+    <!--</FrameLayout>-->
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                                        android:id="@+id/pager"
                                        android:layout_width="match_parent"
                                        android:layout_height="0dp"
-                                       android:layout_weight="1"
-        >
-                                       <!--android:layout_height="wrap_content"-->
+                                       android:layout_weight="1" >
+
     </android.support.v4.view.ViewPager>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="transparent">@android:color/transparent</color>
     <color name="almostTransparent">#33ffffff</color>
-    <color name="backgroundColor">#E6ffffff</color>
-    <color name="backgroundColorLight">#40ffffff</color>
+    <color name="backgroundColor">#f2ffffff</color>
+    <color name="backgroundColorLight">#e6ffffff</color>
     <color name="backgroundDark">#CC000000</color>
     <color name="backgroundAccentColorDark">#009688</color>
-    <color name="backgroundAccentColorDarkTransparent">#D9009688</color>
+    <color name="backgroundAccentColorDarkTransparent">#CC009688</color>
+
 </resources>
 
 <!--TRANSPARENCIES-->

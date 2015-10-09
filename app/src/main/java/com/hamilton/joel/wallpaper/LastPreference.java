@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by joel on 03/10/15.
+ * Created by joel on 09/10/15.
  */
-public class ClickPreference extends Preference {
+public class LastPreference extends Preference {
 
     private TextView title;
 
 
-    public ClickPreference(Context context, AttributeSet attrs) {
+    public LastPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -33,13 +33,13 @@ public class ClickPreference extends Preference {
             title.setTypeface(null, Typeface.BOLD);
 
 //            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundDark));
-            v.setBackgroundResource(R.drawable.click_background_selector);
+            v.setBackgroundResource(R.drawable.last_pref_background_selector);
 
         }
 
 
     }
-//
+    //
     @Override
     protected View onCreateView(ViewGroup container) {
 

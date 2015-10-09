@@ -2,15 +2,11 @@ package com.hamilton.joel.wallpaper;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
-import android.preference.Preference;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +16,7 @@ import android.widget.TextView;
 /**
  * Created by joel on 02/10/15.
  */
-public class NumberPickerPreferenece extends DialogPreference {
+public class NumberPickerPreference extends DialogPreference {
     private final String TAG = "LOGNumberPickerPref";
     private final int DEFAULT_VALUE = 5;
 
@@ -31,7 +27,7 @@ public class NumberPickerPreferenece extends DialogPreference {
     private int value;
     NumberPicker picker;
 
-    public NumberPickerPreferenece(Context context, AttributeSet attrs) {
+    public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setDialogLayoutResource(R.layout.numberpicker_dialog);
@@ -47,6 +43,9 @@ public class NumberPickerPreferenece extends DialogPreference {
 
 
         picker = (NumberPicker) v.findViewById(R.id.numberPicker);
+        if (picker.getValue() > 5) {
+            picker.setValue(5);
+        }
         picker.setMinValue(1);
         picker.setMaxValue(5);
         picker.setWrapSelectorWheel(false);
@@ -65,8 +64,8 @@ public class NumberPickerPreferenece extends DialogPreference {
             title.setGravity(Gravity.CENTER);
             title.setTypeface(null, Typeface.BOLD);
 //            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundDark));
-            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
-
+//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
+            v.setBackgroundResource(R.drawable.click_background_selector);
         }
     }
 
