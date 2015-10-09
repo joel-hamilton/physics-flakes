@@ -1,0 +1,24 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="android:windowBackground">@color/almostTransparent</item>-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--<item name="android:textColor">#E6FFFFFF</item>-->
+        <item name="android:textColor">#D9000000</item>
+        <!--<item name="android:textColorSecondary">#B3FFFFFF</item>-->
+        <item name="android:textColorSecondary">#8C000000</item>
+
+
+    </style>
+
+    <style name="AlertDialogTheme">
+        <item name="android:textColor">#E6000000</item>
+    </style>
+
+</resources>

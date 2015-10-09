@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="prefsPadding">30dp</dimen>
+    <dimen name="maxSnowSize">3dp</dimen>
+    <dimen name="twoDP">2dp</dimen>
+    <dimen name="threeDP">3dp</dimen>
+</resources>

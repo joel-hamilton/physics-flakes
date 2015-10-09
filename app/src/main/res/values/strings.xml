@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Physics Flakes</string>
+    <string name="wallpaper_description">Wallpaper</string>
+    <string name="crash_toast_text">CrashToast!</string>
+
+    <string-array name="quality_array">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+</resources>
