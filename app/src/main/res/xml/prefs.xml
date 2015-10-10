@@ -10,7 +10,7 @@
     <com.hamilton.joel.wallpaper.ClickPreference
         android:key="image_picker"
         android:title="Change Wallpaper Background"
-        android:defaultValue="8" />
+        android:defaultValue="0" />
 
     <com.hamilton.joel.wallpaper.NumberPickerPreference
         android:key="number_of_flakes"

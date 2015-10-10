@@ -2,14 +2,18 @@ package com.hamilton.joel.wallpaper;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
+
+import java.io.InputStream;
 /**
  * Created by joel on 08/10/15.
  */
@@ -50,7 +54,13 @@ public class AnalyticsApplication extends Application {
         return background;
     }
 
-    public static Bitmap getScaledBitmap(int resId, int reqWidth) {
+    public static Bitmap getBitmapFromStream(InputStream stream, int reqWidth, int reqHeight) {
+        Bitmap background;
+        background = decodeSampledBitmapFromStream(stream, reqWidth, reqHeight);
+        return background;
+    }
+
+    public static Bitmap getScaledBitmapFromRes(int resId, int reqWidth) {
         Bitmap background;
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -103,5 +113,29 @@ public class AnalyticsApplication extends Application {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, resId, options), reqWidth, reqHeight, true);
+    }
+
+    private static Bitmap decodeSampledBitmapFromStream(InputStream stream,
+                                                          int reqWidth, int reqHeight) {
+        Bitmap background;
+//        // First decode with inJustDecodeBounds=true to check dimensions
+//        final BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inJustDecodeBounds = true;
+//        BitmapFactory.decodeStream(stream, null, options);
+//
+////        // Calculate inSampleSize
+//        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+////        // Decode bitmap with inSampleSize set
+//        options.inJustDecodeBounds = false;
+//        Log.i(TAG, "STREAM = " + stream.toString());
+        Log.i(TAG, "reqW & reqH = " + reqWidth + " " + reqHeight);
+//        Log.i(TAG, "options.inSampleSize = " + options.inSampleSize);
+//        try {
+            background = Bitmap.createScaledBitmap(BitmapFactory.decodeStream(stream), reqWidth, reqHeight, true);
+//        } catch (Exception e) {
+//            Log.e(TAG, "decodeSampledBitmapFromStream FAILED", e);
+//            return null;
+//        }
+        return background;
     }
 }

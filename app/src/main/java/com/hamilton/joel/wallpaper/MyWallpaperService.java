@@ -1,10 +1,12 @@
 package com.hamilton.joel.wallpaper;
 
+import java.io.InputStream;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -20,16 +22,21 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.renderscript.ScriptGroup;
 import android.service.wallpaper.WallpaperService;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.edmodo.cropper.CropImageView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -38,12 +45,13 @@ import com.google.android.gms.analytics.Tracker;
  */
 
 public class MyWallpaperService extends WallpaperService {
-    private final String TAG = "MyWallPaperService";
+    private final String TAG = "LOGMyWallPaperService";
     public static final int INT_DEFAULT_QUANTITY = 3;
     public static final int INT_DEFAULT_GRAVITY = 4;
     public static final int INT_DEFAULT_QUALITY = 1;
     private SharedPreferences prefs;
     private Tracker wallpaperServiceTracker;
+
 
 
     @Override
@@ -56,6 +64,7 @@ public class MyWallpaperService extends WallpaperService {
 
         return new MyWallpaperEngine();
     }
+
 
     private class MyWallpaperEngine extends Engine {
         private final Handler handler = new Handler();
@@ -80,6 +89,7 @@ public class MyWallpaperService extends WallpaperService {
         private double gravity;
         private int flakeQuality;
         private int flakeFactor;
+        private Uri imageUri;
         private String imagePosition;
         private boolean visible = true;
         private boolean touchEnabled;
@@ -93,15 +103,15 @@ public class MyWallpaperService extends WallpaperService {
         private float pitch;
         private float roll;
         private long shakeLastTime;
-        private long shakeCurrentTime;
         Bitmap background;
+        private long shakeCurrentTime;
         SharedPreferences.OnSharedPreferenceChangeListener prefListener;
         private Display display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         private int rotation;
         private float[] gravityEvent;
 
         public MyWallpaperEngine() {
-            Log.i(TAG, "MyWallpaperEngine Created");
+            Log.i(TAG, "LOGMyWallpaperEngine Created");
             prefs = PreferenceManager.getDefaultSharedPreferences(MyWallpaperService.this);
 
             getPrefs(prefs);
@@ -109,7 +119,7 @@ public class MyWallpaperService extends WallpaperService {
             prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
+                    Log.i(TAG, "onSharedPreferenceChanged CALLED");
                     if (
                             key.equals("touch_enabled") ||
                             key.equals("enable_shake") ||
@@ -121,7 +131,14 @@ public class MyWallpaperService extends WallpaperService {
                                 .setAction(key)
                                 .setLabel(String.valueOf(sharedPreferences.getBoolean(key, false)))
                                 .build());
-                    } else {
+                    } else if (key.equals("image_uri")) {
+                        Log.i(TAG, "STRING CHANGED");
+                        wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
+                                .setCategory("Prefs Changed")
+                                .setAction(key)
+                                .setLabel(sharedPreferences.getString(key, "-1"))
+                                .build());
+                    }  else {
                         Log.i(TAG, "INT CHANGED");
                         wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
                                 .setCategory("Prefs Changed")
@@ -130,22 +147,72 @@ public class MyWallpaperService extends WallpaperService {
                                 .build());
                     }
                     getPrefs(prefs);
-                    int bitmapResourceInt = getResources().getIdentifier(imagePosition, "drawable", getPackageName());
-                    Log.i(TAG, "bitmapResourceInt = " + bitmapResourceInt);
-                    if (bitmapResourceInt == 0) {
-                        bitmapResourceInt = R.drawable.p0;
-                        Log.e(TAG, "BITMAPRESOURCEINT not parsed");
-                    }
+                    getBackgroundBitmap();
 
-                    background = AnalyticsApplication.getBitmapFromResource(bitmapResourceInt, width, height);
                     addFlakesToArray();
                 }
             };
 
-            handler.post(drawRunner);
+//            handler.post(drawRunner); TODO
 
             if (flakes != null) {
                 flakes.clear();
+            }
+        }
+
+
+
+
+        private void getBackgroundBitmap() {
+
+//            if (imagePosition.equals("p-1")) { //try to load image from stream
+            if (!imageUri.toString().equals("-1")) { // uri has been set
+                InputStream stream = null;
+                try {
+                    stream = getContentResolver().openInputStream(imageUri);
+                    background  = AnalyticsApplication.getBitmapFromStream(stream, width, height);
+                    stream.close();
+
+
+//
+//                    Intent cropperIntent = new Intent(MyWallpaperService.this, CropActivity.class);
+//                    startActivity(cropperIntent);
+//                        background = BitmapFactory.decodeStream(stream);
+//                        if (background == null) {
+//                            background = AnalyticsApplication.getBitmapFromResource(R.drawable.p0, width, height);
+//                            prefs.edit().putInt("image_picker", 0).commit();
+//                            Log.e(TAG, "background = null: THROWING EXCEPTION");
+//                            throw (new Exception());
+//                        }
+                    Log.i(TAG, "background loaded from STREAM");
+
+
+                } catch (Exception e) { //problem decoding stream
+                    Log.e(TAG, "couldn't decode bitmap from stream", e);
+
+                    Intent i = new Intent(MyWallpaperService.this, ImageGalleryActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                    Toast.makeText(MyWallpaperService.this, "can't load file", Toast.LENGTH_LONG)
+                            .show();
+                    prefs.edit().putString("image_uri", "-1").commit();
+//                    if (background == null) {
+//                        Log.i(TAG, "1 - background was null: setting image_picker pref. to 0, and loading from R.drawable.p0");
+//                        background = AnalyticsApplication.getBitmapFromResource(R.drawable.p0, width, height);
+//                    }
+                }
+
+
+//
+//                }
+//            }
+
+
+            } else {
+
+                int bitmapResourceInt = getResources().getIdentifier(imagePosition, "drawable", getPackageName());
+                background = AnalyticsApplication.getBitmapFromResource(bitmapResourceInt, width, height);
+                Log.i(TAG, "background loaded from RES.DRAWABLE");
             }
         }
 
@@ -154,6 +221,7 @@ public class MyWallpaperService extends WallpaperService {
             int temp2 = 6 - temp;
                 flakeFactor = temp2 * 1500;
 
+            imageUri = Uri.parse(prefs.getString("image_uri", "-1"));
             maxNumber = calculateFlakeNumber(flakeFactor);
             imagePosition = "p" + prefs.getInt("image_picker", 0);
             shakeOnVisible = prefs.getBoolean("shake_on_visible", false);
@@ -163,6 +231,7 @@ public class MyWallpaperService extends WallpaperService {
             shakeEnabled = prefs.getBoolean("enable_shake", true);
             useAccelerometer = prefs.getBoolean("antigravity_enabled", true);
 
+            Log.i(TAG, "image_uri = " + imageUri);
             Log.i(TAG, "imagePosition = " + imagePosition);
             Log.i(TAG, "maxNumber = " + maxNumber);
             Log.i(TAG, "flakeFactor = " + flakeFactor);
@@ -172,7 +241,6 @@ public class MyWallpaperService extends WallpaperService {
             Log.i(TAG, "shake = " + shakeEnabled);
             Log.i(TAG, "shakeOnVisible = " + shakeOnVisible);
             Log.i(TAG, "useAccelerometer = " + useAccelerometer);
-
         }
 
         @Override
@@ -280,14 +348,15 @@ public class MyWallpaperService extends WallpaperService {
             Log.i(TAG, "SURFACE SET: height & width  = " + this.height + " " + this.width);
             super.onSurfaceChanged(holder, format, width, height);
 
-            int bitmapResourceInt = getResources().getIdentifier(imagePosition , "drawable", getPackageName());
-            Log.i(TAG, "bitmapResourceInt = " + bitmapResourceInt);
-            if (bitmapResourceInt == 0) {
-                bitmapResourceInt = R.drawable.p0;
-                Log.e(TAG, "BITMAPRESOURCEINT not parsed");
-            }
+//            int bitmapResourceInt = getResources().getIdentifier(imagePosition , "drawable", getPackageName());
+//            Log.i(TAG, "bitmapResourceInt = " + bitmapResourceInt);
+//            if (bitmapResourceInt == 0) {
+//                bitmapResourceInt = R.drawable.p0;
+//                Log.e(TAG, "BITMAPRESOURCEINT not parsed");
+//            }
 
-            background = AnalyticsApplication.getBitmapFromResource(bitmapResourceInt, this.width, this.height);
+            getBackgroundBitmap();
+//            background = AnalyticsApplication.getBitmapFromResource(bitmapResourceInt, this.width, this.height);
 
             maxNumber = calculateFlakeNumber(flakeFactor);
             addFlakesToArray();
@@ -474,6 +543,7 @@ public class MyWallpaperService extends WallpaperService {
                     }
                 }
             }
+
         }
     }
 

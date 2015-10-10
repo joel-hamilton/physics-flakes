@@ -1,6 +1,8 @@
 package com.hamilton.joel.wallpaper;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -26,11 +28,13 @@ import com.google.android.gms.analytics.Tracker;
  * Created by joel on 06/10/15.
  */
 public class ImageGalleryActivity extends AppCompatActivity {
-    private final String TAG = "ImageGalleryActivity";
+    private final String TAG = "LOGImageGalleryActivity";
+    private final int PICK_PHOTO = 2;
 
     private ViewPager pager;
     private ImageViewPagerAdapter adapter;
     private Button setWallpaper;
+    private Button chooseFromGallery;
     private Button cancel;
     private Tracker imageGalleyActivityTracker;
 
@@ -46,8 +50,6 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
         setContentView(R.layout.image_gallery_image_pager);
 
-
-
         if ((findViewById(R.id.fragment_container) != null)) {
             Log.i(TAG, "onCreate VIEW EXISTS");
             View v = findViewById(R.id.fragment_container);
@@ -59,7 +61,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         pager.setAdapter(adapter);
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(4);
 
 
 
@@ -69,10 +71,21 @@ public class ImageGalleryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("image_uri", "-1");
                 editor.putInt("image_picker", pager.getCurrentItem());
                 editor.commit();
                 finish();
 
+            }
+        });
+
+        chooseFromGallery = (Button) findViewById(R.id.choose_from_file_button);
+        chooseFromGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_PHOTO);
             }
         });
 
@@ -83,6 +96,21 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int request, int result, Intent data) {
+        super.onActivityResult(request, result, data);
+
+        if ((request == PICK_PHOTO) && (result == Activity.RESULT_OK)) {
+            if (data == null) {
+                Log.e(TAG, "no photo returned");
+                return;
+            }
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ImageGalleryActivity.this);
+            prefs.edit().putString("image_uri", data.getDataString()).commit();
+            finish();
+        }
     }
 
     //--------------------------------------------
@@ -99,7 +127,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
         @Override
         public int getCount() {
 //TODO get num programatically
-            return 3;
+            return 4;
         }
 
         @Override
@@ -116,7 +144,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
             Point size = new Point();
             Display display = getWindowManager().getDefaultDisplay();
             display.getSize(size);
-            int width = size.x;
+            int width = size.x/3; //TODO scaled down image
 
 
             String pageNumberString = "p" + String.valueOf(position);
@@ -126,7 +154,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
             ImageLoader loader = new ImageLoader();
             loader.execute(intArray);
             try {
-                imageView.setImageBitmap(loader.get()); //TODO
+                imageView.setImageBitmap(loader.get());
             } catch (Exception e) {
                 Log.e(TAG, "onCreateView EXCEPTION", e);
             }
@@ -152,7 +180,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
         @Override
         protected Bitmap doInBackground(Integer... params) {
-            Bitmap background = AnalyticsApplication.getScaledBitmap(params[0], params[1]);
+            Bitmap background = AnalyticsApplication.getScaledBitmapFromRes(params[0], params[1]);
             Log.i(TAG, "ASyncTask loading Bitmap  " + background.getWidth() + " " + background.getHeight());
             return background;
         }

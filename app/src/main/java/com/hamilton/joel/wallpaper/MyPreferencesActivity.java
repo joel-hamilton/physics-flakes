@@ -44,13 +44,11 @@ public class MyPreferencesActivity extends PreferenceActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkFirstRun();
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         prefsActivityTracker = application.getDefaultTracker();
         prefsActivityTracker.setScreenName(TAG);
         prefsActivityTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-
-
         addPreferencesFromResource(R.xml.prefs);
 
 
@@ -58,6 +56,10 @@ public class MyPreferencesActivity extends PreferenceActivity {
         Preference clearPrefs;
         Preference applyWallpaper;
         final Preference imagePicker;
+
+
+
+
 
         imagePicker = getPreferenceScreen().findPreference("image_picker");
 
@@ -206,5 +208,63 @@ public class MyPreferencesActivity extends PreferenceActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void checkFirstRun() {
+
+        final String PREFS_NAME = "MyPrefsFile";
+        final String PREF_VERSION_CODE_KEY = "version_code";
+        final String PREF_RUN_COUNT_KEY = "run_count";
+        final int DOESNT_EXIST = -1;
+
+
+        // Get current version code
+        int currentVersionCode = 0;
+        try {
+            currentVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+            // handle exception
+            e.printStackTrace();
+            return;
+        }
+
+        // Get saved version code
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        int savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST);
+        int runCount = prefs.getInt(PREF_RUN_COUNT_KEY, 0);
+
+        // Check for first run or upgrade
+        if (currentVersionCode == savedVersionCode) {
+            //Normal run
+            runCount++;
+            if (runCount == 5) { // TODO Implement intent to pop up give rating/buy pro activity
+                Log.i(TAG, "PLEASE BUY MY APP, BRO");
+            }
+
+        } else if (savedVersionCode == DOESNT_EXIST) {
+            //New install (or prefs cleared)//TODO welcome screen
+
+            //Reset shared preferences
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyPreferencesActivity.this);
+            SharedPreferences.Editor editor = preferences.edit();
+            int oldImage = preferences.getInt("image_picker", 0);
+            editor.clear();
+            editor.putInt("image_picker", oldImage);
+            editor.commit();
+
+            prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).commit();
+
+        } else if (currentVersionCode > savedVersionCode) {
+            //Upgraded, first run
+
+            prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).commit();
+
+        }
+
+        prefs.edit().putInt(PREF_RUN_COUNT_KEY, runCount).commit();
+
+        Log.i(TAG, "CURRENT RUNCOUNT = " + prefs.getInt(PREF_RUN_COUNT_KEY, DOESNT_EXIST));
+        Log.i(TAG, "CURRENT VERSIONCODE = " + prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST));
+
     }
 }
