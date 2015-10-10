@@ -53,24 +53,9 @@
     <com.hamilton.joel.wallpaper.ClickPreference
         android:key="clear_prefs"
         android:title="Reset Settings"/>
-    <!--<PreferenceScreen/>-->
 
     <com.hamilton.joel.wallpaper.LastPreference
         android:key="contact"
         android:title="Send Joel a suggestion (please!)"/>
 
-
-
-    <!--<EditTextPreference android:key="numberOfFlakes"-->
-                        <!--android:title="Number of Flakes"-->
-                        <!--android:defaultValue="0"/>-->
-
-    <!--<EditTextPreference android:key="flakeSpeed"-->
-                        <!--android:title="Gravity Strength" />-->
-
-    <!--<EditTextPreference android:key="flakeQuality"-->
-                        <!--android:title="Snowflake Quality"/>-->
-
-    <!-- -->
-        <!--android:title="Apply Wallpaper"/>-->
 </PreferenceScreen>

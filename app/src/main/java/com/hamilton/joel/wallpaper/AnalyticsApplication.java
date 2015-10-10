@@ -31,6 +31,17 @@ public class AnalyticsApplication extends Application {
     private static Context getContext() {
         return context;
     }
+//-------------------------Tracker------------------------------
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker(R.xml.analytics_config);
+            mTracker.enableAdvertisingIdCollection(true);
+        }
+        return mTracker;
+    }
+//-------------------------Bitmap Methods------------------------------
 
     public static Bitmap getBitmapFromResource(int resource, int width, int height) {
         Bitmap background;
@@ -92,21 +103,5 @@ public class AnalyticsApplication extends Application {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, resId, options), reqWidth, reqHeight, true);
-//            return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    /**
-     * Gets the default {@link Tracker} for this {@link Application}.
-     * @return tracker
-     */
-    synchronized public Tracker getDefaultTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            mTracker = analytics.newTracker(R.xml.analytics_config);
-            mTracker.enableAdvertisingIdCollection(true);
-//            mTracker = analytics.newTracker(R.xml.global_tracker);
-        }
-        return mTracker;
     }
 }

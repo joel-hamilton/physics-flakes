@@ -8,8 +8,8 @@ public class Flake {
     public float y;
     public float size;
     public double distanceFromTouch = 1;
-    public double velocity; //TODO set this with ontouchlistener, recalculate with each redraw
-    public double launchAngle; //TODO
+    public double velocity;
+    public double launchAngle;
     public boolean toFling;
 
     public Flake(float x, float y, float size) {

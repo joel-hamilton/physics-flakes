@@ -8,7 +8,7 @@
         android:startColor="@color/backgroundAccentColorDarkTransparent"
         android:angle="270" />
     <padding
-        android:left="10dp" />
+        android:left="15dp" />
 
     <corners
         android:topLeftRadius="15dp"

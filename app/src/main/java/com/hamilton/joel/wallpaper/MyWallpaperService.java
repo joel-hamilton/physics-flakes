@@ -78,7 +78,6 @@ public class MyWallpaperService extends WallpaperService {
         private boolean shakeOnVisible;
         private int maxNumber;
         private double gravity;
-        private int spinnerTester;
         private int flakeQuality;
         private int flakeFactor;
         private String imagePosition;
@@ -95,13 +94,11 @@ public class MyWallpaperService extends WallpaperService {
         private float roll;
         private long shakeLastTime;
         private long shakeCurrentTime;
-        private long currentTime;
-        private long lastTime;
         Bitmap background;
         SharedPreferences.OnSharedPreferenceChangeListener prefListener;
         private Display display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         private int rotation;
-        private float[] gravityEvent;;
+        private float[] gravityEvent;
 
         public MyWallpaperEngine() {
             Log.i(TAG, "MyWallpaperEngine Created");
@@ -141,7 +138,6 @@ public class MyWallpaperService extends WallpaperService {
                     }
 
                     background = AnalyticsApplication.getBitmapFromResource(bitmapResourceInt, width, height);
-//                    background = BitmapMethods.getBitmapFromResource(bitmapResourceInt, width, height);
                     addFlakesToArray();
                 }
             };
@@ -167,53 +163,6 @@ public class MyWallpaperService extends WallpaperService {
             shakeEnabled = prefs.getBoolean("enable_shake", true);
             useAccelerometer = prefs.getBoolean("antigravity_enabled", true);
 
-//                wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                        .setCategory("Action")
-//                        .setAction("Prefs Changed")
-//                        .setLabel("imagePosition = " + imagePosition)
-//                        .build());
-//            }
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("Flake Number Setting = " + temp)
-//                    .build());
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("maxNumber = " + maxNumber)
-//                    .build());
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("gravity = " + gravity)
-//                    .build());
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("quality = " + flakeQuality)
-//                    .build());
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("touchEnabled = " + touchEnabled)
-//                    .build());
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("shakeEnabled = " + shakeEnabled)
-//                    .build());
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("shakeOnVisible = " + shakeOnVisible )
-//                    .build());
-//            wallpaperServiceTracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Prefs Changed")
-//                    .setLabel("useAccelerometer = " + useAccelerometer)
-//                    .build());
-
             Log.i(TAG, "imagePosition = " + imagePosition);
             Log.i(TAG, "maxNumber = " + maxNumber);
             Log.i(TAG, "flakeFactor = " + flakeFactor);
@@ -234,8 +183,6 @@ public class MyWallpaperService extends WallpaperService {
             rotation = display.getRotation();
 
             if (visible) {
-//                addFlakesToArray();
-//                Log.i(TAG, "onVisibilityChanged VISIBLE");
                 if (shakeOnVisible) {
                     shakeEvent(30);
                 }
@@ -314,46 +261,6 @@ public class MyWallpaperService extends WallpaperService {
             handler.removeCallbacks(drawRunner);
         }
 
-//        private int calculateInSampleSize(
-//                BitmapFactory.Options options, int reqWidth, int reqHeight) {
-//            // Raw height and width of image
-//            final int height = options.outHeight;
-//            final int width = options.outWidth;
-//            int inSampleSize = 1;
-//
-//            if (height > reqHeight || width > reqWidth) {
-//
-//                final int halfHeight = height / 2;
-//                final int halfWidth = width / 2;
-//
-//                // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-//                // height and width larger than the requested height and width.
-//                while ((halfHeight / inSampleSize) > reqHeight
-//                        && (halfWidth / inSampleSize) > reqWidth) {
-//                    inSampleSize *= 2;
-//                }
-//            }
-//
-//            return inSampleSize;
-//        }
-//
-//        private Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-//                                                       int reqWidth, int reqHeight) {
-//
-//            // First decode with inJustDecodeBounds=true to check dimensions
-//            final BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inJustDecodeBounds = true;
-//            BitmapFactory.decodeResource(res, resId, options);
-//
-//            // Calculate inSampleSize
-//            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-//            Log.i(TAG, "decodeSampledBitmapFromResource SAMPLESIZE = " + options.inSampleSize);
-//            // Decode bitmap with inSampleSize set
-//            options.inJustDecodeBounds = false;
-//            return Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, resId, options), width, height, true);
-////            return BitmapFactory.decodeResource(res, resId, options);
-//        }
-
         private int calculateFlakeNumber(int flakeFactor) {
             int max;
             if (width < height) {
@@ -373,10 +280,6 @@ public class MyWallpaperService extends WallpaperService {
             Log.i(TAG, "SURFACE SET: height & width  = " + this.height + " " + this.width);
             super.onSurfaceChanged(holder, format, width, height);
 
-//            if (flakes != null) {
-//                return;
-//            }
-
             int bitmapResourceInt = getResources().getIdentifier(imagePosition , "drawable", getPackageName());
             Log.i(TAG, "bitmapResourceInt = " + bitmapResourceInt);
             if (bitmapResourceInt == 0) {
@@ -385,11 +288,8 @@ public class MyWallpaperService extends WallpaperService {
             }
 
             background = AnalyticsApplication.getBitmapFromResource(bitmapResourceInt, this.width, this.height);
-//            background = BitmapMethods.getBitmapFromResource(bitmapResourceInt, this.width, this.height);
-//            background = decodeSampledBitmapFromResource(getResources(), R.drawable.dawn_jpg, this.width, this.height);
 
             maxNumber = calculateFlakeNumber(flakeFactor);
-//            Log.i(TAG, "onSurfaceChanged MaxNumber = " + maxNumber);
             addFlakesToArray();
         }
 
@@ -451,18 +351,11 @@ public class MyWallpaperService extends WallpaperService {
                                 flake.velocity = flakeSpeed;
                             }
                             flake.launchAngle = rads + (Math.random() - .5);
-//                            Log.i(TAG, "launchangle= " + flake.launchAngle);
                             flake.toFling = false;
                             flake.distanceFromTouch = 1;
                         }
                     }
-//                    Log.i(TAG, "distance, angle, speed = " + distance + " " + degrees + " " + speed);
                 }
-
-
-//                Log.i(TAG, "onTouchEvent, " + xTouch + " " + yTouch);
-
-//                handler.post(drawRunner); //TODO is this necessary?
                 super.onTouchEvent(event);
             }
         }
@@ -487,7 +380,6 @@ public class MyWallpaperService extends WallpaperService {
                         } else if (flake.velocity < .02) {
                             flake.velocity = 0.05;
                         }
-                        //-----------------------FLING-----------------
                         //-----------------------GRAVITY-----------------
 
                         if (!useAccelerometer) {
@@ -502,7 +394,7 @@ public class MyWallpaperService extends WallpaperService {
                         flake.x -= ( pitch  ) * (gravity/3) * flake.size;
                         flake.y += (gravity/5) + ( roll )  * (gravity/3) * flake.size; //default to slow +y gravity direction
 
-                        //-----------------------GRAVITY-----------------
+                        //-----------------------------------------------
 
                         if (flake.y > height + 10) {
                             flake.y = -10;
@@ -545,31 +437,18 @@ public class MyWallpaperService extends WallpaperService {
         private void addFlakesToArray() {
 
             float relativeFlakeSize = getBaseContext().getResources().getDimension(R.dimen.maxSnowSize);
-//            float minSize = relativeFlakeSize/5;
 
             if (flakes == null) {
                 flakes = SnowflakeList.getSnowflakeList();
             } else {
                 flakes.clear();
             }
-//            int sizeFactor;
-//
-//            if (height > width) {
-//                sizeFactor = width;
-//            } else {
-//                sizeFactor = height;
-//            }
-//            maxNumber = 25;
             for (int i = 0; i < maxNumber; i++) {
 
                 float x = (float) (width * Math.random());
                 float y = (float) (height * Math.random());
                 float size = (float) (relativeFlakeSize * Math.random() + 2);
-//                Log.i(TAG, "FLAKE SIZE = " + size);
-//                if (size < 1) {
-//                    size = 1;
-//                }
-//                float size = (float) (sizeFactor / 100 * Math.random());
+
                 flakes.add(new Flake(x, y, size)); //todo
             }
         }

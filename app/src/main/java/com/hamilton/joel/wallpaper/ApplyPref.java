@@ -18,9 +18,6 @@ import android.widget.TextView;
 public class ApplyPref extends Preference {
 
     private TextView title;
-    private View v;
-    private ViewGroup vg;
-
 
     public ApplyPref(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -29,10 +26,8 @@ public class ApplyPref extends Preference {
     @Override
     protected void onBindView(View v) {
 
-        this.v = v;
         super.onBindView(v);
         title = (TextView) v.findViewById(android.R.id.title);
-
 
         if (title != null) {
             title.setGravity(Gravity.CENTER);
@@ -40,26 +35,6 @@ public class ApplyPref extends Preference {
             title.setTypeface(null, Typeface.BOLD);
 
             v.setBackgroundResource(R.drawable.apply_button_background_selector);
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundAccentColorDark));
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
-
         }
-
-
     }
-    //
-    @Override
-    protected View onCreateView(ViewGroup container) {
-        this.vg = container;
-
-//
-        title = (TextView) container.findViewById(android.R.id.title);
-        if (title != null) {
-//            Log.i("HERE", "onCreateView ");
-//            title.setGravity(Gravity.CENTER);
-        }
-
-        return super.onCreateView(container);
-    }
-
 }

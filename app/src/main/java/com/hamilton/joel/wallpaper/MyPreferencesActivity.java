@@ -40,7 +40,6 @@ import com.google.android.gms.analytics.Tracker;
 public class MyPreferencesActivity extends PreferenceActivity {
     private final String TAG = "PreferencesActivity";
     private Tracker prefsActivityTracker;
-    private PreferenceScreen screen;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -60,7 +59,6 @@ public class MyPreferencesActivity extends PreferenceActivity {
         Preference applyWallpaper;
         final Preference imagePicker;
 
-        screen = getPreferenceScreen();
         imagePicker = getPreferenceScreen().findPreference("image_picker");
 
         imagePicker.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -85,7 +83,6 @@ public class MyPreferencesActivity extends PreferenceActivity {
                 i.setType("text/plain");
                 i.setData(Uri.parse("mailto:"));
                 i.putExtra(Intent.EXTRA_EMAIL, email);
-//                i.putExtra(Intent.EXTRA_PHONE_NUMBER, "1-515-777-2459");
                 i.putExtra(Intent.EXTRA_SUBJECT, "Get your act together!");
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -161,12 +158,10 @@ public class MyPreferencesActivity extends PreferenceActivity {
                     intent.setAction(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER);
                     startActivity(intent);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
                 }
                 return true;
             }
         });
-//    }
 
     }
 
@@ -176,9 +171,7 @@ public class MyPreferencesActivity extends PreferenceActivity {
     public void onBackPressed() {
 
         WallpaperManager mgr = WallpaperManager.getInstance(getApplicationContext());
-//        Log.i(TAG, "mgr.getWallpaperInfo() = " + mgr.getWallpaperInfo());
         if ((mgr.getWallpaperInfo() == null)) {
-            //|| (!mgr.getWallpaperInfo().toString().contains("MyWallpaperService"))) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogTheme));
             dialog.setTitle("Would you like to apply this wallpaper?");
             dialog.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
@@ -214,22 +207,4 @@ public class MyPreferencesActivity extends PreferenceActivity {
             super.onBackPressed();
         }
     }
-//
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        finish();
-//    }
-
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode != Activity.RESULT_OK) {
-//            Log.i(TAG, "onActivityResult returned NOT OK");
-//            return;
-//        }
-//        data.getIntExtra("IMAGE_POSITION", 0);
-//
-//    }
 }

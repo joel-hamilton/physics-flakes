@@ -27,30 +27,12 @@ public class ClickPreference extends Preference {
         super.onBindView(v);
         title = (TextView) v.findViewById(android.R.id.title);
 
-
         if (title != null) {
             title.setGravity(Gravity.CENTER);
             title.setTypeface(null, Typeface.BOLD);
 
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundDark));
             v.setBackgroundResource(R.drawable.click_background_selector);
-
         }
-
-
-    }
-//
-    @Override
-    protected View onCreateView(ViewGroup container) {
-
-//
-        title = (TextView) container.findViewById(android.R.id.title);
-        if (title != null) {
-//            Log.i("HERE", "onCreateView ");
-//            title.setGravity(Gravity.CENTER);
-        }
-
-        return super.onCreateView(container);
     }
 }
 

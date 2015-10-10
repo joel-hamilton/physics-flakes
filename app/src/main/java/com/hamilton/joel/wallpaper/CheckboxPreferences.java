@@ -39,16 +39,9 @@ public class CheckboxPreferences extends CheckBoxPreference {
         if (title != null) {
             title.setGravity(Gravity.CENTER);
             title.setTypeface(null, Typeface.BOLD);
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundDark));
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
 
             v.setBackgroundResource(R.drawable.click_background_selector);
             if (summary != null) {
-
-
-//                summary.setGravity(Gravity.CENTER);
-//                summary.setTypeface(null, Typeface.BOLD);
-//                v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColorDarker));
             }
         }
     }

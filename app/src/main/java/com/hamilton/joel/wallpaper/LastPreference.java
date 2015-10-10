@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
@@ -31,26 +33,8 @@ public class LastPreference extends Preference {
         if (title != null) {
             title.setGravity(Gravity.CENTER);
             title.setTypeface(null, Typeface.BOLD);
-
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundDark));
             v.setBackgroundResource(R.drawable.last_pref_background_selector);
-
         }
-
-
-    }
-    //
-    @Override
-    protected View onCreateView(ViewGroup container) {
-
-//
-        title = (TextView) container.findViewById(android.R.id.title);
-        if (title != null) {
-//            Log.i("HERE", "onCreateView ");
-//            title.setGravity(Gravity.CENTER);
-        }
-
-        return super.onCreateView(container);
     }
 }
 

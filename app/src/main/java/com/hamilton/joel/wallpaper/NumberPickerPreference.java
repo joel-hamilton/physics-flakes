@@ -22,8 +22,6 @@ public class NumberPickerPreference extends DialogPreference {
 
     private TextView title;
 
-    private int newValue;
-    private int currentValue;
     private int value;
     NumberPicker picker;
 
@@ -63,8 +61,6 @@ public class NumberPickerPreference extends DialogPreference {
         if (title != null) {
             title.setGravity(Gravity.CENTER);
             title.setTypeface(null, Typeface.BOLD);
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundDark));
-//            v.setBackgroundColor(getContext().getResources().getColor(R.color.backgroundColor));
             v.setBackgroundResource(R.drawable.click_background_selector);
         }
     }
@@ -80,13 +76,10 @@ public class NumberPickerPreference extends DialogPreference {
         if (restorePersistedValue) {
             // Restore existing state
             value = this.getPersistedInt(DEFAULT_VALUE);
-//            currentValue = this.getPersistedInt(DEFAULT_VALUE);
         } else {
             // Set default state from the XML attribute
             value = (Integer) defaultValue;
-//            currentValue = (Integer) defaultValue;
             persistInt(value);
-//            persistInt(currentValue);
         }
     }
 
@@ -99,48 +92,34 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onDialogClosed(boolean positiveResult) {
         // When the user selects "OK", persist the new value
         if (positiveResult) {
-//            Log.i(TAG, "dialog OK clicked, saving newValue");
-//            newValue = picker.getValue();
             value = picker.getValue();
-//            currentValue = picker.getValue();
             persistInt(value);
-//            persistInt(newValue);
-//            Log.i(TAG, "newValue = " + newValue);
         }
     }
 
     @Override
     protected Parcelable onSaveInstanceState() {
-//        Log.i(TAG, "onSaveInstanceState CALLED");
         final Parcelable superState = super.onSaveInstanceState();
         // Check whether this Preference is persistent (continually saved)
         if (isPersistent()) {
-//            Log.i(TAG, "onSaveInstanceState IS PERSISTANT: not saving value");
-//            myState.value = newValue;
             // No need to save instance state since it's persistent,
             // use superclass state
             return superState;
         }
             final SavedState myState = new SavedState(superState);
             myState.value = value;
-//            Log.i(TAG, "out myState.value = " + myState.value);
 
         // Create instance of custom BaseSavedState
         // Set the state's value with the class member that holds current
         // setting value
-//        newValue = picker.getValue();
-//        myState.value = newValue;
-//        Log.i(TAG, "onSaveInstanceState SETTING mystate.VALUE TO = ");
         return myState;
     }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-//        Log.i(TAG, "onRestoreInstanceState CALLED");
         // Check whether we saved the state in onSaveInstanceState
         if (state == null || !state.getClass().equals(SavedState.class)) {
             // Didn't save the state, so call superclass
-//            Log.i(TAG, "onRestoreInstanceState NOT EXECUTED");
             super.onRestoreInstanceState(state);
             return;
         }
@@ -150,7 +129,6 @@ public class NumberPickerPreference extends DialogPreference {
         super.onRestoreInstanceState(myState.getSuperState());
 
         // Set this Preference's widget to reflect the restored state
-//        Log.i(TAG, "onRestoreInstanceState newValue SET TO = " + myState.value);
         value = myState.value;
 //        newValue = myState.value;
     }

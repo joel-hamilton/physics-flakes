@@ -4,7 +4,7 @@
     <solid android:color="@color/backgroundAccentColorDarkTransparent"/>
 
     <padding
-        android:left="10dp" />
+        android:left="15dp" />
 
     <corners
         android:topLeftRadius="15dp"
