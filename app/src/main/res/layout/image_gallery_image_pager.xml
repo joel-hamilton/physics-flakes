@@ -5,7 +5,7 @@
                 android:layout_height="match_parent"
               android:layout_marginBottom="30dp"
                 android:id="@+id/fragment_container">
-              <!--android:background="@drawable/image_picker_drawable"-->
+              <!--android:background="@drawable/rounded_corners_background"-->
                 <!--android:paddingLeft="6dp"-->
                 <!--android:paddingRight="6dp"-->
                 <!--android:paddingTop="6dp"-->

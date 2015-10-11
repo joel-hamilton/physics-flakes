@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/prefs_view">
+
+    <com.hamilton.joel.wallpaper.ApplyPref
+        android:key="go_back"
+        android:title="Back to Main Menu" />
+
+    <com.hamilton.joel.wallpaper.NumberPickerPreference
+        android:key="number_of_flakes"
+        android:title="Number of Flakes"
+        android:defaultValue="3"/>
+
+    <com.hamilton.joel.wallpaper.QualityPickerPreferences
+        android:key="flake_quality"
+        android:title="Snowflake Quality"
+        android:defaultValue="1"/>
+
+    <com.hamilton.joel.wallpaper.NumberPickerPreference
+        android:key="gravity_strength"
+        android:title="Gravity Strength"
+        android:defaultValue="4"/>
+
+    <com.hamilton.joel.wallpaper.CheckboxPreferences
+        android:key="touch_enabled"
+        android:title="Enable Touch Effects"
+        android:summaryOn="Flake flinging fun enabled!"
+        android:summaryOff="Touch effects disabled"
+        android:defaultValue="true" />
+
+    <com.hamilton.joel.wallpaper.CheckboxPreferences
+        android:key="antigravity_enabled"
+        android:title="AntiGravity"
+        android:summaryOn="Gravity pulls towards the real ground"
+        android:summaryOff="Gravity always pulls towards bottom of the homescreen"
+        android:defaultValue="true" />
+
+    <com.hamilton.joel.wallpaper.CheckboxPreferences
+        android:key="enable_shake"
+        android:title="Enable Shake"
+        android:summaryOn="Make a snowstorm when you shake the device"
+        android:summaryOff="Don't make a snowstorm when you shake the device"
+        android:defaultValue="true"/>
+
+    <com.hamilton.joel.wallpaper.CheckboxPreferences
+        android:key="shake_on_visible"
+        android:title="Auto Snowstorm"
+        android:summaryOn="Simulate a snowstorm when the wallpaper becomes visible"
+        android:summaryOff="Don't simulate a snowstorm when the wallpaper becomes visible"
+        android:defaultValue="false"/>
+
+    <com.hamilton.joel.wallpaper.LastPreference
+    android:key="clear_prefs"
+    android:title="Reset Settings"/>
+
+</PreferenceScreen>

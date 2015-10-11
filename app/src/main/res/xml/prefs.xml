@@ -5,57 +5,70 @@
 
     <com.hamilton.joel.wallpaper.ApplyPref
         android:key="apply_wallpaper"
-        android:title="Apply Wallpaper" />
+        android:title="Set Physics Flakes as Wallpaper" />
 
     <com.hamilton.joel.wallpaper.ClickPreference
         android:key="image_picker"
-        android:title="Change Wallpaper Background"
+        android:title="Change Background Image"
         android:defaultValue="0" />
 
-    <com.hamilton.joel.wallpaper.NumberPickerPreference
-        android:key="number_of_flakes"
-        android:title="Amount of Flakes"
-        android:defaultValue="3"/>
-
-    <com.hamilton.joel.wallpaper.NumberPickerPreference
-        android:key="gravity_strength"
-        android:title="Gravity Strength"
-        android:defaultValue="4"/>
-
-    <com.hamilton.joel.wallpaper.QualityPickerPreferences
-        android:key="flake_quality"
-        android:title="Snowflake Quality"
-        android:defaultValue="1"/>
-
-    <com.hamilton.joel.wallpaper.CheckboxPreferences
-        android:key="touch_enabled"
-        android:title="Enable Touch Effects"
-        android:defaultValue="true" />
-
-    <com.hamilton.joel.wallpaper.CheckboxPreferences
-        android:key="antigravity_enabled"
-        android:title="AntiGravity"
-        android:summary="When enabled, gravity pulls from the lowest point on physical phone.\n\nWhen disabled, the bottom of the homescreen is always 'down'"
-        android:defaultValue="true" />
-
-    <com.hamilton.joel.wallpaper.CheckboxPreferences
-        android:key="enable_shake"
-        android:title="Enable Shake"
-        android:summary="Makes a snowstorm when you shake the device. The flake velocity is determined by the shake strength."
-        android:defaultValue="true"/>
-
-    <com.hamilton.joel.wallpaper.CheckboxPreferences
-        android:key="shake_on_visible"
-        android:title="Auto Snowstorm"
-        android:summary="Automatically simulates a shake event when the wallpaper becomes visible. This will work, even if 'Enable Shake' is disabled"
-        android:defaultValue="false"/>
-
     <com.hamilton.joel.wallpaper.ClickPreference
-        android:key="clear_prefs"
-        android:title="Reset Settings"/>
+        android:title="Settings"
+        android:key="advanced_prefs"
+    />
+
+    <!--<com.hamilton.joel.wallpaper.NumberPickerPreference-->
+        <!--android:key="number_of_flakes"-->
+        <!--android:title="Amount of Flakes"-->
+        <!--android:defaultValue="3"/>-->
+
+    <!--<com.hamilton.joel.wallpaper.NumberPickerPreference-->
+        <!--android:key="gravity_strength"-->
+        <!--android:title="Gravity Strength"-->
+        <!--android:defaultValue="4"/>-->
+
+    <!--<com.hamilton.joel.wallpaper.QualityPickerPreferences-->
+        <!--android:key="flake_quality"-->
+        <!--android:title="Snowflake Quality"-->
+        <!--android:defaultValue="1"/>-->
+
+    <!--<com.hamilton.joel.wallpaper.CheckboxPreferences-->
+        <!--android:key="touch_enabled"-->
+        <!--android:title="Enable Touch Effects"-->
+        <!--android:defaultValue="true" />-->
+
+    <!--<com.hamilton.joel.wallpaper.CheckboxPreferences-->
+        <!--android:key="antigravity_enabled"-->
+        <!--android:title="AntiGravity"-->
+        <!--android:summary="When enabled, gravity pulls from the lowest point on physical phone.\n\nWhen disabled, the bottom of the homescreen is always 'down'"-->
+        <!--android:defaultValue="true" />-->
+
+    <!--<com.hamilton.joel.wallpaper.CheckboxPreferences-->
+        <!--android:key="enable_shake"-->
+        <!--android:title="Enable Shake"-->
+        <!--android:summary="Makes a snowstorm when you shake the device. The flake velocity is determined by the shake strength."-->
+        <!--android:defaultValue="true"/>-->
+
+    <!--<com.hamilton.joel.wallpaper.CheckboxPreferences-->
+        <!--android:key="shake_on_visible"-->
+        <!--android:title="Auto Snowstorm"-->
+        <!--android:summary="Automatically simulates a shake event when the wallpaper becomes visible. This will work, even if 'Enable Shake' is disabled"-->
+        <!--android:defaultValue="false"/>-->
+
+    <!--<com.hamilton.joel.wallpaper.ClickPreference-->
+        <!--android:key="clear_prefs"-->
+        <!--android:title="Reset Settings"/>-->
+
+    <!--<com.hamilton.joel.wallpaper.ClickPreference-->
+        <!--android:key="rate"-->
+        <!--android:title="Rate on Play Store"/>-->
 
     <com.hamilton.joel.wallpaper.LastPreference
-        android:key="contact"
-        android:title="Send Joel a suggestion (please!)"/>
+        android:key="upgrade"
+        android:title="Unlock full version"/>
+
+    <!--<com.hamilton.joel.wallpaper.LastPreference-->
+        <!--android:key="contact"-->
+        <!--android:title="Send Joel a suggestion (please!)"/>-->
 
 </PreferenceScreen>

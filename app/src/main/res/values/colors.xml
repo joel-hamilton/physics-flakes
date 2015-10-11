@@ -7,6 +7,8 @@
     <color name="backgroundDark">#CC000000</color>
     <color name="backgroundAccentColorDark">#009688</color>
     <color name="backgroundAccentColorDarkTransparent">#CC009688</color>
+    <color name="textColor">#D9000000</color>
+    <color name="textColorSecondary">#8C000000</color>
 
 </resources>
 

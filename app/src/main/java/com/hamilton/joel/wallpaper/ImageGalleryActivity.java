@@ -53,7 +53,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
         if ((findViewById(R.id.fragment_container) != null)) {
             Log.i(TAG, "onCreate VIEW EXISTS");
             View v = findViewById(R.id.fragment_container);
-            v.setBackgroundResource(R.drawable.image_picker_drawable);
+            v.setBackgroundResource(R.drawable.rounded_corners_background);
         }
 
 

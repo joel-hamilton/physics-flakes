@@ -37,7 +37,6 @@
 
         <activity
             android:name=".MyPreferencesActivity"
-            android:launchMode ="singleTop"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -48,6 +47,18 @@
                   <!--android:launchMode="singleTop"-->
             <!--android:theme="@android:style/Theme.Light.WallpaperSettings" >-->
         </activity>
+
+        <activity android:name=".RatingActivity"
+                  android:theme="@style/AppTheme"
+                  android:label=" "/>
+
+        <activity android:name=".UpgradeActivity"
+                  android:theme="@style/AppTheme"
+                  android:label=" "/>
+
+        <activity android:name=".SecondPrefsActivity"
+                  android:theme="@style/AppTheme"
+                  android:label=" "/>
 
         <activity android:name=".ImageGalleryActivity"
             android:theme="@style/AppTheme"

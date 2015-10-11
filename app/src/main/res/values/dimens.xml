@@ -4,4 +4,5 @@
     <dimen name="maxSnowSize">3dp</dimen>
     <dimen name="twoDP">2dp</dimen>
     <dimen name="threeDP">3dp</dimen>
+    <dimen name="star_png_width">250dp</dimen>
 </resources>
