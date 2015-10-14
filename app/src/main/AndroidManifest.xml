@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
         <!--android:name=".BitmapMethods"-->
     <application
@@ -35,6 +35,19 @@
             </meta-data>
         </service>
 
+        <!--<activity--> //TODO implement this main activity to run PreferenceFragments
+            <!--android:name=".MainActivity"-->
+            <!--android:exported="true"-->
+            <!--android:label="@string/app_name">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--<activity android:name="Prefs2Activity"/>-->
+            <!--android:theme="@style/AppTheme">-->
+
         <activity
             android:name=".MyPreferencesActivity"
             android:exported="true"
@@ -52,15 +65,16 @@
                   android:theme="@style/AppTheme"
                   android:label=" "/>
 
-        <activity android:name=".UpgradeActivity"
-                  android:theme="@style/AppTheme"
-                  android:label=" "/>
-
         <activity android:name=".SecondPrefsActivity"
                   android:theme="@style/AppTheme"
                   android:label=" "/>
 
         <activity android:name=".ImageGalleryActivity"
+            android:theme="@style/AppTheme"
+            android:label=" "
+            />
+
+        <activity android:name=".UnlockPagerActivity"
             android:theme="@style/AppTheme"
             android:label=" "
             />

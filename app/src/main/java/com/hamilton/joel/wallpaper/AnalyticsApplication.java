@@ -131,7 +131,11 @@ public class AnalyticsApplication extends Application {
         Log.i(TAG, "reqW & reqH = " + reqWidth + " " + reqHeight);
 //        Log.i(TAG, "options.inSampleSize = " + options.inSampleSize);
 //        try {
-            background = Bitmap.createScaledBitmap(BitmapFactory.decodeStream(stream), reqWidth, reqHeight, true);
+        Bitmap temp = BitmapFactory.decodeStream(stream);
+        if (temp == null) {
+            return null;
+        }
+        background = Bitmap.createScaledBitmap(temp, reqWidth, reqHeight, true);
 //        } catch (Exception e) {
 //            Log.e(TAG, "decodeSampledBitmapFromStream FAILED", e);
 //            return null;

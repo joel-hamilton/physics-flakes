@@ -1,5 +1,6 @@
 package com.hamilton.joel.wallpaper;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,19 +47,23 @@ public class SecondPrefsActivity extends PreferenceActivity {
         clearPrefs = getPreferenceScreen().findPreference("clear_prefs");
         clearPrefs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
+            public boolean onPreferenceClick(final Preference preference) {
 
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(new ContextThemeWrapper(SecondPrefsActivity.this, R.style.AlertDialogTheme));
-                dialog.setTitle("Reset all settings?");
-                dialog.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+                dialog.setTitle(getResources().getString(R.string.reset_ask));
+                dialog.setPositiveButton(getResources().getString(R.string.reset), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(SecondPrefsActivity.this);
                         SharedPreferences.Editor editor = preferences.edit();
                         int oldImage = preferences.getInt("image_picker", 0);
+                        boolean oldLoadStream = preferences.getBoolean("load_stream", false);
+                        String oldUri = preferences.getString("image_uri", "-1");
                         editor.clear();
+                        editor.putBoolean("load_image", oldLoadStream);
+                        editor.putString("image_uri", oldUri);
                         editor.putInt("image_picker", oldImage);
                         editor.commit();
 
@@ -68,24 +73,26 @@ public class SecondPrefsActivity extends PreferenceActivity {
                                 .build());
 
                         dialog.dismiss();
-                        SecondPrefsActivity.this.finish();
-
+                        Intent i = new Intent(SecondPrefsActivity.this, SecondPrefsActivity.class);
+                        SecondPrefsActivity.this.recreate();
+//                        SecondPrefsActivity.this.finish();
+//
 //                        new Handler().post(new Runnable() {
 //
 //                            @Override
 //                            public void run() {
 //                                Intent intent = SecondPrefsActivity.this.getIntent();
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+////                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                                startActivity(intent);
 //                                SecondPrefsActivity.this.finish();
 //
-//                                startActivity(intent);
 //                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 //                            }
 //                        });
 
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

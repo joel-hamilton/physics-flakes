@@ -1,5 +1,6 @@
 package com.hamilton.joel.wallpaper;
 
+import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -26,7 +27,12 @@ import com.google.android.gms.analytics.Tracker;
 
 public class MyPreferencesActivity extends PreferenceActivity {
     private final String TAG = "PreferencesActivity";
+    private final int PICK_PHOTO = 2;
     private Tracker prefsActivityTracker;
+
+    public static MyPreferencesActivity getInstance() {
+        return new MyPreferencesActivity();
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -38,14 +44,27 @@ public class MyPreferencesActivity extends PreferenceActivity {
         prefsActivityTracker.send(new HitBuilders.ScreenViewBuilder().build());
         addPreferencesFromResource(R.xml.prefs);
 
-
         Preference advancedPrefs;
+        Preference chooseFromGallery;
         Preference rate;
         Preference upgrade;
         Preference contact;
         Preference clearPrefs;
         Preference applyWallpaper;
         final Preference imagePicker;
+
+
+        chooseFromGallery = getPreferenceScreen().findPreference("image_picker_from_gallery");
+        chooseFromGallery.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_PHOTO);
+                return true;
+            }
+        });
+
 
 
         advancedPrefs = getPreferenceScreen().findPreference("advanced_prefs");
@@ -63,7 +82,8 @@ public class MyPreferencesActivity extends PreferenceActivity {
         upgrade.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override//temp implementation
             public boolean onPreferenceClick(Preference preference) {
-                Intent i = new Intent(MyPreferencesActivity.this, UpgradeActivity.class);
+                Intent i = new Intent(MyPreferencesActivity.this, UnlockPagerActivity.class);
+//                Intent i = new Intent(MyPreferencesActivity.this, UpgradeActivity.class);
                 startActivity(i);
                 return true;
             }
@@ -134,23 +154,36 @@ public class MyPreferencesActivity extends PreferenceActivity {
         applyWallpaper.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
-                try {
-                    Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
-                    intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-                            new ComponentName(MyPreferencesActivity.this, MyWallpaperService.class));
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Intent intent = new Intent();
-                    intent.setAction(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER);
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                }
+                setAsWallpaper();
                 return true;
             }
         });
 
     }
+
+
+    @Override
+    public void onActivityResult(int request, int result, Intent data) {
+        super.onActivityResult(request, result, data);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MyPreferencesActivity.this);
+
+        if ((request == PICK_PHOTO) && (result == Activity.RESULT_OK)) {
+            if (data == null) {
+                Log.e(TAG, "no photo returned");
+                prefs.edit().putString("image_uri", "-1").commit();
+                prefs.edit().putBoolean("load_stream", false).commit();
+                return;
+            }
+            Log.i(TAG, "photo returned");
+            prefs.edit().putString("image_uri", data.getDataString()).commit();
+            prefs.edit().putBoolean("load_stream", true).commit();
+        } else {
+            Log.i(TAG, "onActivityResult result!=ACTIVITY_OK");
+            prefs.edit().putString("image_uri", "-1").commit();
+            prefs.edit().putBoolean("load_stream", false).commit();
+        }
+    }
+
 
 
 
@@ -160,38 +193,39 @@ public class MyPreferencesActivity extends PreferenceActivity {
         WallpaperManager mgr = WallpaperManager.getInstance(getApplicationContext());
         if ((mgr.getWallpaperInfo() == null)) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogTheme));
-            dialog.setTitle("Would you like to apply this wallpaper?");
-            dialog.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+            dialog.setTitle(getResources().getString(R.string.apply_wallpaper_dialog));
+            dialog.setPositiveButton(getResources().getString(R.string.apply), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    try {
-                        Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
-                        intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-                                new ComponentName(MyPreferencesActivity.this, MyWallpaperService.class));
-                        startActivity(intent);
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-                    } catch (Exception e) {
-                        Intent intent = new Intent();
-                        intent.setAction(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER);
-                        startActivity(intent);
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-                    } finally {
-                        MyPreferencesActivity.super.onBackPressed();
-                    }
+                    setAsWallpaper();
+                    MyPreferencesActivity.super.onBackPressed();
                 }
             });
-            dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            dialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    MyPreferencesActivity.super.onBackPressed();
                     MyPreferencesActivity.super.onBackPressed();
                 }
             });
             dialog.show();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private void setAsWallpaper() {
+        try {
+            Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+            intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
+                    new ComponentName(MyPreferencesActivity.this, MyWallpaperService.class));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            Intent intent = new Intent();
+            intent.setAction(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 
@@ -222,7 +256,7 @@ public class MyPreferencesActivity extends PreferenceActivity {
         if (currentVersionCode == savedVersionCode) {
             //Normal run
             runCount++;
-            if (runCount == 6) { // TODO Implement intent to pop up give rating/buy pro activity
+            if (runCount == 10) { // TODO Implement intent to pop up give rating/buy pro activity
                 Intent i = new Intent(MyPreferencesActivity.this, RatingActivity.class);
                 startActivity(i);
             }
@@ -233,9 +267,7 @@ public class MyPreferencesActivity extends PreferenceActivity {
             //Reset shared preferences
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyPreferencesActivity.this);
             SharedPreferences.Editor editor = preferences.edit();
-            int oldImage = preferences.getInt("image_picker", 0);
             editor.clear();
-            editor.putInt("image_picker", oldImage);
             editor.commit();
 
             prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).commit();

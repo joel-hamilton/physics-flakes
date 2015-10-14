@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    ----------MENU 1----------------
+    <string name="apply_wallpaper">Apply Wallpaper</string>
+    <string name="change_image">Choose Background image</string>
+    <string name="change_image_from_gallery">Background image from gallery</string>
+    <string name="settings">Settings</string>
+    <string name="upgrade">Upgrade to the full version</string>
+
+    ---------MENU 2----------------
+    <string name="flake_number">Number of Flakes</string>
+    <string name="flake_quality">Flake Quality</string>
+    <string name="gravity_strength">Gravity Strength</string>
+    <string name="touch_enable">Enable Touch Effects</string>
+    <string name="touch_summary_on">Flake flinging fun enabled!</string>
+    <string name="touch_summary_off">Touch effects disabled</string>
+    <string name="antigravity_enable">AntiGravity</string>
+    <string name="antigravity_summary_on">Gravity pulls towards the real ground</string>
+    <string name="antigravity_summary_off">Gravity always pulls towards bottom of the homescreen</string>
+    <string name="shake_enable">Enable Snowglobe Effect</string>
+    <string name="shake_summary_on">Snowstorm when device is shaken</string>
+    <string name="shake_summary_off">Snowstorm effect disabled</string>
+    <string name="snowstorm_enable">Auto Snowstorm</string>
+    <string name="snowstorm_summary_on">Snowstorm when the wallpaper becomes visible</string>
+    <string name="snowstorm_summary_off">No snowstorm when the wallpaper becomes visible</string>
+    <string name="reset_settings">Reset Settings</string>
+
+    <string-array name="quality_array">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
+</resources>

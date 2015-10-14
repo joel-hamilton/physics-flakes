@@ -3,55 +3,55 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   android:id="@+id/prefs_view">
 
-    <com.hamilton.joel.wallpaper.ApplyPref
+    <com.hamilton.joel.wallpaper.FirstPref
         android:key="go_back"
         android:title="Back to Main Menu" />
 
     <com.hamilton.joel.wallpaper.NumberPickerPreference
         android:key="number_of_flakes"
-        android:title="Number of Flakes"
+        android:title="@string/flake_number"
         android:defaultValue="3"/>
 
     <com.hamilton.joel.wallpaper.QualityPickerPreferences
         android:key="flake_quality"
-        android:title="Snowflake Quality"
+        android:title="@string/flake_quality"
         android:defaultValue="1"/>
 
     <com.hamilton.joel.wallpaper.NumberPickerPreference
         android:key="gravity_strength"
-        android:title="Gravity Strength"
+        android:title="@string/gravity_strength"
         android:defaultValue="4"/>
 
     <com.hamilton.joel.wallpaper.CheckboxPreferences
         android:key="touch_enabled"
-        android:title="Enable Touch Effects"
-        android:summaryOn="Flake flinging fun enabled!"
-        android:summaryOff="Touch effects disabled"
+        android:title="@string/touch_enable"
+        android:summaryOn="@string/touch_summary_on"
+        android:summaryOff="@string/touch_summary_off"
         android:defaultValue="true" />
 
     <com.hamilton.joel.wallpaper.CheckboxPreferences
-        android:key="antigravity_enabled"
-        android:title="AntiGravity"
-        android:summaryOn="Gravity pulls towards the real ground"
-        android:summaryOff="Gravity always pulls towards bottom of the homescreen"
+        android:key="antigravity_enable"
+        android:title="@string/antigravity_enable"
+        android:summaryOn="@string/antigravity_summary_on"
+        android:summaryOff="@string/antigravity_summary_off"
         android:defaultValue="true" />
 
     <com.hamilton.joel.wallpaper.CheckboxPreferences
         android:key="enable_shake"
-        android:title="Enable Shake"
-        android:summaryOn="Make a snowstorm when you shake the device"
-        android:summaryOff="Don't make a snowstorm when you shake the device"
+        android:title="@string/shake_enable"
+        android:summaryOn="@string/shake_summary_on"
+        android:summaryOff="@string/shake_summary_off"
         android:defaultValue="true"/>
 
     <com.hamilton.joel.wallpaper.CheckboxPreferences
         android:key="shake_on_visible"
-        android:title="Auto Snowstorm"
-        android:summaryOn="Simulate a snowstorm when the wallpaper becomes visible"
-        android:summaryOff="Don't simulate a snowstorm when the wallpaper becomes visible"
+        android:title="@string/snowstorm_enable"
+        android:summaryOn="@string/snowstorm_summary_on"
+        android:summaryOff="@string/snowstorm_summary_off"
         android:defaultValue="false"/>
 
     <com.hamilton.joel.wallpaper.LastPreference
     android:key="clear_prefs"
-    android:title="Reset Settings"/>
+    android:title="@string/reset_settings"/>
 
 </PreferenceScreen>

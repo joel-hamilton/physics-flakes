@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="unlock_boss" type="layout">@layout/unlock_pager_activity</item>
+    <item name="unlock_fragment_boss" type="layout">@layout/unlock_pager_fragment</item>
+</resources>

@@ -29,17 +29,20 @@ import com.google.android.gms.analytics.Tracker;
  */
 public class ImageGalleryActivity extends AppCompatActivity {
     private final String TAG = "LOGImageGalleryActivity";
-    private final int PICK_PHOTO = 2;
+    private final String PAGE_NUM = "pageNum";
+    private final int PAGE_COUNT = 12; //TODO set this programatically?
 
     private ViewPager pager;
     private ImageViewPagerAdapter adapter;
     private Button setWallpaper;
-    private Button chooseFromGallery;
     private Button cancel;
     private Tracker imageGalleyActivityTracker;
+    private LinearLayout sliderCirclesLayout;
+    private int mostRecentPage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
 
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         imageGalleyActivityTracker = application.getDefaultTracker();
@@ -48,6 +51,9 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            mostRecentPage = savedInstanceState.getInt(PAGE_NUM);
+        }
         setContentView(R.layout.image_gallery_image_pager);
 
         if ((findViewById(R.id.fragment_container) != null)) {
@@ -58,11 +64,31 @@ public class ImageGalleryActivity extends AppCompatActivity {
 
 
         adapter = new ImageViewPagerAdapter(ImageGalleryActivity.this);
+
+        sliderCirclesLayout = (LinearLayout) findViewById(R.id.imgslider_circle_layout);
+        changeSliderCircles(mostRecentPage);
+
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         pager.setAdapter(adapter);
-        pager.setOffscreenPageLimit(4);
+        pager.setOffscreenPageLimit(PAGE_COUNT - 1);
+        pager.setCurrentItem(mostRecentPage);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                changeSliderCircles(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
 
         setWallpaper = (Button) findViewById(R.id.set_background_button);
@@ -72,20 +98,11 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("image_uri", "-1");
+                editor.putBoolean("load_stream", false);
                 editor.putInt("image_picker", pager.getCurrentItem());
                 editor.commit();
                 finish();
 
-            }
-        });
-
-        chooseFromGallery = (Button) findViewById(R.id.choose_from_file_button);
-        chooseFromGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, PICK_PHOTO);
             }
         });
 
@@ -99,17 +116,27 @@ public class ImageGalleryActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int request, int result, Intent data) {
-        super.onActivityResult(request, result, data);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(PAGE_NUM, pager.getCurrentItem());
+    }
 
-        if ((request == PICK_PHOTO) && (result == Activity.RESULT_OK)) {
-            if (data == null) {
-                Log.e(TAG, "no photo returned");
-                return;
+    private void changeSliderCircles(int position) {
+        int margins = (int) (5 * ImageGalleryActivity.this.getResources().getDisplayMetrics().density);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(margins, margins, margins, margins);
+        sliderCirclesLayout.removeAllViews();
+
+        for (int i = 0, a = adapter.getCount(); i < a; i++) {
+            ImageView temp = new ImageView(ImageGalleryActivity.this);
+            if (i == position) {
+                temp.setImageDrawable(getResources().getDrawable(R.drawable.slider_circle_dark));
+            } else {
+                temp.setImageDrawable(getResources().getDrawable(R.drawable.slider_circle_light));
             }
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ImageGalleryActivity.this);
-            prefs.edit().putString("image_uri", data.getDataString()).commit();
-            finish();
+            temp.setId(i);
+            temp.setLayoutParams(params);
+            sliderCirclesLayout.addView(temp);
         }
     }
 
@@ -127,7 +154,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
         @Override
         public int getCount() {
 //TODO get num programatically
-            return 4;
+            return PAGE_COUNT;
         }
 
         @Override
@@ -144,7 +171,7 @@ public class ImageGalleryActivity extends AppCompatActivity {
             Point size = new Point();
             Display display = getWindowManager().getDefaultDisplay();
             display.getSize(size);
-            int width = size.x/3; //TODO scaled down image
+            int width = size.x/2; //TODO scaled down image
 
 
             String pageNumberString = "p" + String.valueOf(position);

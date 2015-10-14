@@ -1,12 +1,29 @@
 <resources>
+
+    -----------WALLPAPER SERVICE-------------
+    <string name="cant_load_file">Error loading file</string>
+
+    ------------APP--------------
     <string name="app_name">Physics Flakes</string>
     <string name="wallpaper_description">Wallpaper</string>
-    <string name="crash_toast_text">CrashToast!</string>
+    <string name="cancel">Cancel</string>
 
-    <string-array name="quality_array">
-        <item>Low</item>
-        <item>Medium</item>
-        <item>High</item>
-    </string-array>
+    ----------PREFS DIALOGS------------
+    <string name="apply_wallpaper_dialog">Would you like to apply this wallpaper?</string>
+    <string name="apply">Apply</string>
+    <string name="reset_ask">Reset all settings?</string>
+    <string name="reset">Reset</string>
+
+    ------------RATE SCREEN----------------
+    <string name="rate_header">Loving Physics Flakes?</string>
+    <string name="rate_now_button">Rate us!</string>
+    <string name="rate_later_button">Later</string>
+    <string name="no_thanks_button">No thanks</string>
+    <string name="rate_text">Please consider giving us a\n5-star rating on the Play Store!\n\n
+    The link won\'t actually work until the release version...just testing this dialog out</string>
+
+    ---------IMAGE PICKER---------------
+    <string name="select_background">Apply</string>
+    <string name="choose_from_gallery">Phone Gallery</string>
 
 </resources>

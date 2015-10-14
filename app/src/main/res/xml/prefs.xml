@@ -3,17 +3,28 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
                   android:id="@+id/prefs_view">
 
-    <com.hamilton.joel.wallpaper.ApplyPref
+    <com.hamilton.joel.wallpaper.FirstPref
+        android:key="title"
+        android:selectable="false"
+        android:enabled="false"
+        android:title="@string/app_name" />
+
+    <com.hamilton.joel.wallpaper.ClickPreference
         android:key="apply_wallpaper"
-        android:title="Set Physics Flakes as Wallpaper" />
+        android:title="@string/apply_wallpaper" />
 
     <com.hamilton.joel.wallpaper.ClickPreference
         android:key="image_picker"
-        android:title="Change Background Image"
+        android:title="@string/change_image"
         android:defaultValue="0" />
 
     <com.hamilton.joel.wallpaper.ClickPreference
-        android:title="Settings"
+        android:key="image_picker_from_gallery"
+        android:title="@string/change_image_from_gallery"
+        android:defaultValue="0" />
+
+    <com.hamilton.joel.wallpaper.ClickPreference
+        android:title="@string/settings"
         android:key="advanced_prefs"
     />
 
@@ -65,7 +76,7 @@
 
     <com.hamilton.joel.wallpaper.LastPreference
         android:key="upgrade"
-        android:title="Unlock full version"/>
+        android:title="@string/upgrade"/>
 
     <!--<com.hamilton.joel.wallpaper.LastPreference-->
         <!--android:key="contact"-->

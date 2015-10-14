@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">@android:color/transparent</color>
+    <color name="white">#ffffff</color>
     <color name="almostTransparent">#33ffffff</color>
     <color name="backgroundColor">#f2ffffff</color>
     <color name="backgroundColorLight">#e6ffffff</color>
@@ -9,6 +10,8 @@
     <color name="backgroundAccentColorDarkTransparent">#CC009688</color>
     <color name="textColor">#D9000000</color>
     <color name="textColorSecondary">#8C000000</color>
+    <color name="transparant_grey">#8c000000</color>
+    <color name="transparant_grey_light">#33000000</color>
 
 </resources>
 

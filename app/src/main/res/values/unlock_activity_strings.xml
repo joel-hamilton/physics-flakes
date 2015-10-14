@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title0">Additional backgrounds</string>
+    <string name="message0">Get 10+ gorgeous HD backgrounds - or choose an image from your own gallery!</string>
+
+    <string name="title1">Like having a snowglobe in your pocket&#8230;</string>
+    <string name="message1">But way less awkward. Shake your phone to create a snow flurry!</string>
+
+    <string name="title2">Advanced settings</string>
+    <string name="message2">Customize your experience! Change the number of snowflakes, the strength
+        of gravity, and increase or decrease the flake quality</string>
+
+    <string name="upgrade_button">testing...</string>
+</resources>
