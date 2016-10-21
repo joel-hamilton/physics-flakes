@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="prefsPadding">30dp</dimen>
+    <dimen name="maxSnowSize">3dp</dimen>
+    <dimen name="twoDP">2dp</dimen>
+    <dimen name="iconAsterisk">20dp</dimen>
+    <dimen name="threeDP">3dp</dimen>
+    <dimen name="star_png_width">250dp</dimen>
+</resources>
+
+<!--   landscape  -  1280px * 800px   -->
+<!--   landscape-large  -  2560px * 1600px   -->
+<!--    portrait  -  1920px * 1280px  -->

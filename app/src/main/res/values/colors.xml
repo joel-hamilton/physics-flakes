@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="white">#ffffff</color>
+    <color name="almostTransparent">#33ffffff</color>
+    <color name="backgroundColor">#f2ffffff</color>
+    <color name="backgroundColorLight">#e6ffffff</color>
+    <color name="backgroundDark">#CC000000</color>
+    <color name="backgroundAccentColorDark">#009688</color>
+    <color name="backgroundAccentColorDarkTransparent">#CC009688</color>
+    <color name="textColor">#D9000000</color>
+    <color name="textColorSecondary">#8C000000</color>
+    <color name="transparant_grey">#8c000000</color>
+    <color name="transparant_grey_light">#33000000</color>
+
+</resources>
+
+<!--TRANSPARENCIES-->
+    <!--100% — FF-->
+    <!--95% — F2-->
+    <!--90% — E6-->
+    <!--85% — D9-->
+    <!--80% — CC-->
+    <!--75% — BF-->
+    <!--70% — B3-->
+    <!--65% — A6-->
+    <!--60% — 99-->
+    <!--55% — 8C-->
+    <!--50% — 80-->
+    <!--45% — 73-->
+    <!--40% — 66-->
+    <!--35% — 59-->
+    <!--30% — 4D-->
+    <!--25% — 40-->
+    <!--20% — 33-->
+    <!--15% — 26-->
+    <!--10% — 1A-->
+    <!--5% — 0D-->
+    <!--0% — 00-->

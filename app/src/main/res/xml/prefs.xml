@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/prefs_view">
+
+    <com.hamilton.joel.physicsflakes.FirstPref
+        android:key="title"
+        android:selectable="false"
+        android:enabled="false"
+        android:title="@string/app_name" />
+
+    <com.hamilton.joel.physicsflakes.ClickPreference
+        android:key="apply_wallpaper"
+        android:title="@string/apply_wallpaper" />
+
+    <com.hamilton.joel.physicsflakes.ClickPreference
+        android:key="image_picker"
+        android:title="@string/change_image"
+        android:defaultValue="0" />
+
+    <com.hamilton.joel.physicsflakes.ClickPreference
+        android:key="image_picker_from_gallery"
+        android:title="@string/change_image_from_gallery"
+        android:defaultValue="0" />
+
+    <!--TODO FLAG FREE VERSION-->
+    <!--<com.hamilton.joel.wallpaper.ClickPreference-->
+        <!--android:key="auto_change_image"-->
+        <!--android:title="@string/auto_change_image"-->
+        <!--android:entries="@array/auto_change_image_list"-->
+        <!--android:entryValues="@array/auto_change_array_values"-->
+        <!--android:defaultValue="0"/>-->
+
+    <!--TODO FLAG PRO VERSION-->
+    <com.hamilton.joel.physicsflakes.ListPrefsExtender
+        android:key="auto_change_image"
+        android:title="@string/auto_change_image"
+        android:entries="@array/auto_change_image_list"
+        android:entryValues="@array/auto_change_array_values"
+        android:defaultValue="0"/>
+
+    <com.hamilton.joel.physicsflakes.ClickPreference
+        android:key="advanced_prefs"
+        android:title="@string/settings"
+    />
+
+    <com.hamilton.joel.physicsflakes.LastPreference
+        android:key="about"
+        android:title="@string/about"/>
+
+</PreferenceScreen>

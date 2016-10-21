@@ -1,0 +1,42 @@
+<resources>
+      -----------WALLPAPER SERVICE-------------
+    <string name="cant_load_file">Error loading file</string>
+
+    ----------------APP--------------
+    <string name="app_name">Physics Flakes</string>
+    <string name="wallpaper_description">Wallpaper</string>
+    <string name="cancel">Cancel</string>
+
+    -------------RATE SCREEN----------------
+    <string name="rate_header">Loving Physics Flakes?</string>
+    <string name="rate_now_button">Rate us!</string>
+    <string name="rate_later_button">Later</string>
+    <string name="no_thanks_button">No thanks</string>
+    <string name="rate_text">Please consider giving us a\n5-star rating on the Play Store!</string>
+
+    -----------ABOUT SCREEN---------
+    <string name="about_title">About</string>
+    <string name="about_text"></string>
+    <string name="about_contact">Email Us</string>
+    <string name="about_rate">Rate on the Play Store</string>
+    <string name="about_upgrade">Upgrade to the full version</string>
+
+    -----------IMAGE PICKER---------------
+    <string name="loading_dialog">Loading Gallery</string>
+    <string name="select_background">Apply</string>
+    <string name="choose_from_gallery">Phone Gallery</string>
+
+    -----------UNLOCK SCREEN---------------
+    <string name="title0">Additional backgrounds</string>
+    <string name="message0">Get 10+ gorgeous HD backgrounds - or choose an image from your own gallery!</string>
+
+    <string name="title1">Like having a snowglobe in your pocket&#8230;</string>
+    <string name="message1">But way less awkward. Shake your phone to create a snow flurry!</string>
+
+    <string name="title2">Advanced settings</string>
+    <string name="message2">Make your Physics Flakes as unique as a real snowflake. Change the number of snowflakes, the strength
+        of gravity, and increase or decrease the flake quality</string>
+
+    <string name="title3">Auto-change backgrounds</string>
+    <string name="message3">Keep it fresh, effortlessly! Set your background picture to change automatically as frequently as you want</string>
+</resources>

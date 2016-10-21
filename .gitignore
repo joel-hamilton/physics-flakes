@@ -1,5 +1,9 @@
-*
-*/
-!.git/
+.gradle/
+.idea/
+build/
+captures/
+gen/
+gradle/
+app/build/
+app/libs/
 !.gitignore
-!app/src/

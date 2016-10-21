@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/prefs_view">
+
+    <com.hamilton.joel.physicsflakes.FirstPref
+        android:key="go_back"
+        android:title="Back to Main Menu" />
+
+    <com.hamilton.joel.physicsflakes.NumberPickerPreference
+        android:key="number_of_flakes"
+        android:title="@string/flake_number"
+        android:defaultValue="3"/>
+
+    <com.hamilton.joel.physicsflakes.ListPrefsExtender
+        android:key="flake_quality"
+        android:title="@string/flake_quality"
+        android:entries="@array/quality_array"
+        android:entryValues="@array/quality_array_values"
+        android:defaultValue="1"/>
+
+    <com.hamilton.joel.physicsflakes.NumberPickerPreference
+        android:key="gravity_strength"
+        android:title="@string/flake_speed"
+        android:defaultValue="3"/>
+
+    <com.hamilton.joel.physicsflakes.CheckboxPreferences
+        android:key="touch_enabled"
+        android:title="@string/touch_enable"
+        android:summaryOn="@string/touch_summary_on"
+        android:summaryOff="@string/touch_summary_off"
+        android:defaultValue="true" />
+
+    <com.hamilton.joel.physicsflakes.CheckboxPreferences
+        android:key="antigravity_enabled"
+        android:title="@string/antigravity_enable"
+        android:summaryOn="@string/antigravity_summary_on"
+        android:summaryOff="@string/antigravity_summary_off"
+        android:defaultValue="true" />
+
+    <com.hamilton.joel.physicsflakes.CheckboxPreferences
+        android:key="enable_shake"
+        android:title="@string/shake_enable"
+        android:summaryOn="@string/shake_summary_on"
+        android:summaryOff="@string/shake_summary_off"
+        android:defaultValue="true"/>
+
+    <com.hamilton.joel.physicsflakes.CheckboxPreferences
+        android:key="shake_on_visible"
+        android:title="@string/snowstorm_enable"
+        android:summaryOn="@string/snowstorm_summary_on"
+        android:summaryOff="@string/snowstorm_summary_off"
+        android:defaultValue="false"/>
+
+    <com.hamilton.joel.physicsflakes.LastPreference
+    android:key="clear_prefs"
+    android:title="@string/reset_settings"/>
+
+</PreferenceScreen>

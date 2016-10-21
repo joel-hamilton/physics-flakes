@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.hamilton.joel.physicsflakes" >
+
+    <uses-feature
+        android:name="android.software.live_wallpaper"
+        android:required="true" >
+    </uses-feature>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> 
+
+        <!--android:name=".BitmapMethods"-->
+    <application
+        android:name="com.hamilton.joel.physicsflakes.AnalyticsApplication"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true"
+        android:icon="@drawable/ic_launcher">
+        <service
+            android:name="com.hamilton.joel.physicsflakes.MyWallpaperService"
+            android:enabled="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_WALLPAPER" >
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" >
+                </action>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/mywallpaper" >
+            </meta-data>
+        </service>
+
+        <!--<activity--> //TODO implement this main activity to run PreferenceFragments
+            <!--android:name=".MainActivity"-->
+            <!--android:exported="true"-->
+            <!--android:label="@string/app_name">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--<activity android:name="Prefs2Activity"/>-->
+            <!--android:theme="@style/AppTheme">-->
+
+        <activity
+            android:name="com.hamilton.joel.physicsflakes.MyPreferencesActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+                  <!--android:launchMode="singleTop"-->
+            <!--android:theme="@android:style/Theme.Light.WallpaperSettings" >-->
+        </activity>
+
+        <activity android:name="com.hamilton.joel.physicsflakes.RatingActivity"
+                  android:theme="@style/AppTheme"
+                  android:label=" "/>
+
+        <activity android:name="com.hamilton.joel.physicsflakes.SecondPrefsActivity"
+                  android:theme="@style/AppTheme"
+                  android:label=" "/>
+
+        <activity android:name="com.hamilton.joel.physicsflakes.ImageGalleryActivity"
+            android:theme="@style/AppTheme"
+            android:label=" "
+            />
+
+        <activity android:name="com.hamilton.joel.physicsflakes.AboutActivity"
+            android:theme="@style/AppTheme"
+            android:label=" "
+            />
+
+    </application>
+
+</manifest> 
