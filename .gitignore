@@ -6,4 +6,7 @@ gen/
 gradle/
 app/build/
 app/libs/
-!.gitignore
+*.gradle
+*.properties
+*.bat
+*.iml
