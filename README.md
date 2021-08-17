@@ -4,4 +4,4 @@ This was built as a learning project; it's a little kistch but I was pretty plea
 
 It's legit. It's on the [Play Store](https://play.google.com/store/apps/details?id=com.hamilton.joel.physicsflakes)
 
-{{learning|android|java|gradle}}
+{{learning|android|java}}
